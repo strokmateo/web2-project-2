@@ -1,5 +1,3 @@
-# Render Blueprint: creates the Postgres database and the Docker web service.
-# Render dashboard -> New -> Blueprint -> pick this repository.
 services:
   - type: web
     name: vuln-demo
@@ -17,7 +15,7 @@ services:
       - key: ADMIN_USERNAME
         value: admin
       - key: ADMIN_PASSWORD
-        sync: false # asked for when the blueprint is created
+        sync: false
 
 databases:
   - name: vuln-demo-db
