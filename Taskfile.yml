@@ -1,0 +1,48 @@
+version: '3'
+
+dotenv: ['.env']
+
+tasks:
+  default:
+    desc: Start the app (alias for "up")
+    cmds:
+      - task: up
+
+  env:
+    desc: Create .env from .env.example with a random JWT secret (if .env does not exist)
+    status:
+      - test -f .env
+    cmds:
+      - sed "s/^JWT_SECRET=.*/JWT_SECRET=$(openssl rand -hex 32)/" .env.example > .env
+
+  up:
+    desc: Build and start the app and database
+    deps: [env]
+    cmds:
+      - docker compose up --build -d
+      - echo "App running on http://localhost:${PORT:-3000}"
+
+  down:
+    desc: Stop everything (data is kept)
+    cmds:
+      - docker compose down
+
+  reset:
+    desc: Stop everything and delete the database volume
+    cmds:
+      - docker compose down -v
+
+  logs:
+    desc: Follow app logs
+    cmds:
+      - docker compose logs -f app
+
+  psql:
+    desc: Open psql in the database container
+    cmds:
+      - docker compose exec db sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB"'
+
+  migrate:create:
+    desc: 'Create a migration from schema changes, e.g. "task migrate:create -- add_title"'
+    cmds:
+      - docker compose run --rm -v ./prisma:/app/prisma app npx prisma migrate dev --create-only --name {{.CLI_ARGS}}
