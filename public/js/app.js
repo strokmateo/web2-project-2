@@ -28,7 +28,6 @@ const XSS_PRESETS = [
 ];
 
 const token = getToken();
-const PAGE_TITLE = $("page-title").textContent;
 let forgedToken = null;
 
 function base64UrlDecode(part) {
@@ -90,16 +89,6 @@ function logout(query = "") {
 }
 
 $("logout-button").addEventListener("click", () => logout());
-
-function resetPage() {
-  $("page-title").textContent = PAGE_TITLE;
-  document.body.removeAttribute("style");
-  $("note-content").value = "";
-  showMessage($("note-message"), "");
-  resetAccessControlDemo();
-}
-
-$("reset-page-button").addEventListener("click", resetPage);
 
 for (const preset of XSS_PRESETS) {
   const button = document.createElement("button");
