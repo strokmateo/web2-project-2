@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sigurnosne ranjivosti</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1 id="page-title">Sigurnosne ranjivosti web-aplikacija</h1>
+    <div class="session">
+      <strong id="session-username"></strong>
+      <button id="reset-page-button" class="secondary">Resetiraj stranicu</button>
+      <button id="logout-button" class="secondary">Odjava</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. Cross-site scripting (pohranjeni XSS)</h2>
+      <label class="switch">
+        <input type="checkbox" id="xss-vulnerable" checked>
+        Ranjivost uključena
+      </label>
+      <p class="hint">
+        Bilješke se spremaju u bazu točno onako kako su upisane. Kad je ranjivost
+        <strong>uključena</strong>, prikazuju se s <code>element.innerHTML = sadržaj</code>,
+        pa preglednik HTML iz bilješke izvršava kao dio stranice. Kad je
+        <strong>isključena</strong>, koristi se <code>element.textContent = sadržaj</code>
+        i isti sadržaj se prikaže kao običan tekst.
+      </p>
+      <p class="hint">
+        Odaberite gotov napad ili upišite svoj.
+      </p>
+      <div class="row wrap" id="xss-presets"></div>
+      <form id="note-form">
+        <textarea id="note-content" rows="3" placeholder="Sadržaj bilješke..." required></textarea>
+        <button type="submit">Spremi bilješku</button>
+      </form>
+      <p id="note-message" class="message"></p>
+      <h3>Moje bilješke</h3>
+      <ul id="notes-list" class="notes"></ul>
+      <p id="notes-empty" class="hint" hidden>Nema bilješki.</p>
+    </section>
+
+    <section class="card">
+      <h2>2. Loša kontrola pristupa (krivotvorenje JWT tokena)</h2>
+      <label class="switch">
+        <input type="checkbox" id="bac-vulnerable" checked>
+        Ranjivost uključena
+      </label>
+      <p class="hint">
+        Ruta <code>GET /api/admin/users</code> vraća sve korisnike i sve njihove privatne
+        bilješke, samo za ulogu <code>admin</code>. Uloga se čita iz JWT tokena. Kad je ranjivost
+        <strong>uključena</strong>, server token samo dekodira (<code>jwt.decode</code>) i ne
+        provjerava potpis. Kad je <strong>isključena</strong>, koristi
+        <code>jwt.verify</code> i odbija svaki izmijenjeni token.
+      </p>
+
+      <h3>Korak 1: vaš token</h3>
+      <p class="hint">Token ima tri dijela: <span class="jwt-header">zaglavlje</span>.<span class="jwt-payload">sadržaj</span>.<span class="jwt-signature">potpis</span></p>
+      <pre id="token-parts" class="token"></pre>
+
+      <h3>Korak 2: izmijenite sadržaj tokena</h3>
+      <textarea id="payload-editor" rows="7" spellcheck="false"></textarea>
+      <div class="row wrap">
+        <button id="make-admin-button" class="secondary">Postavi "role": "admin"</button>
+        <button id="reset-access-control-button" class="secondary">Resetiraj</button>
+      </div>
+      <pre id="forged-token" class="token"></pre>
+      <p class="hint">Token se ažurira dok pišete. Zaglavlje i potpis ostaju originalni, mijenja se samo srednji dio.</p>
+
+      <h3>Korak 3: pošaljite zahtjev</h3>
+      <div class="row wrap">
+        <button id="send-token-button">Pošalji token</button>
+      </div>
+      <pre id="request-line" class="request"></pre>
+      <div id="admin-result"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

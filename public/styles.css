@@ -1,0 +1,278 @@
+:root {
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --text: #1d2330;
+  --muted: #5d6475;
+  --border: #dde0e6;
+  --accent: #2f5bea;
+  --danger: #c62828;
+  --danger-bg: #fdecec;
+  --success: #1b7f3b;
+  --success-bg: #e7f6ec;
+  --code-bg: #f0f1f4;
+  --jwt-header: #d6336c;
+  --jwt-payload: #7048e8;
+  --jwt-signature: #1c7ed6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+main {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.card h3 {
+  margin: 24px 0 8px;
+  font-size: 1rem;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+code {
+  background: var(--code-bg);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.row.wrap {
+  flex-wrap: wrap;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: inherit;
+}
+
+textarea {
+  font-family: ui-monospace, monospace;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+button {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #fff;
+  color: var(--accent);
+}
+
+button.small {
+  padding: 2px 10px;
+  font-size: 0.85rem;
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-page .card {
+  margin-bottom: 0;
+}
+
+.message {
+  min-height: 1.5em;
+  color: var(--success);
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch:has(input:not(:checked)) {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.switch input {
+  width: auto;
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.notes {
+  list-style: none;
+  padding: 0;
+}
+
+.notes li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.note-content {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-break: break-all;
+  padding: 12px;
+  border-radius: 6px;
+  background: var(--code-bg);
+  font-size: 0.85rem;
+}
+
+.jwt-header {
+  color: var(--jwt-header);
+}
+
+.jwt-payload {
+  color: var(--jwt-payload);
+}
+
+.jwt-signature {
+  color: var(--jwt-signature);
+}
+
+.request:empty {
+  display: none;
+}
+
+/* Admin request result */
+.result {
+  padding: 12px;
+  border-radius: 6px;
+  margin: 12px 0;
+}
+
+.result.success {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.result.denied {
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.result .status {
+  font-weight: 700;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+td.mono {
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  word-break: break-all;
+}
+
+.note-content + .note-content {
+  margin-top: 6px;
+}
